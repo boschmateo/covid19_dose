@@ -1,0 +1,21 @@
+version: '2.1'
+services:
+    postgres:
+        image: postgres:13.1
+        environment:
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=postgres
+            - POSTGRES_DB=postgres
+        logging:
+            options:
+                max-size: 10m
+                max-file: "3"
+        volumes:
+            # Scripts to set up each database
+            - ./setup_scripts:/docker-entrypoint-initdb.d/
+            # Folder where all Postgres data will be stored. This creates the persistency in docker.
+            - ./data/postgres-data:/var/lib/postgresql/data
+            - ./data/files:/files
+
+        ports:
+            - "5432:5432"
