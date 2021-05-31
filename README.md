@@ -52,4 +52,22 @@ The structure of the repository is as follows:
 - __doses.py__: Main script to be run.
 - __open_data.py__: File that contains the main class that handles the logic behind fetching the data, 
     transforming it and persisting it in the database.
-- __requirements.txt__: File containinf the necessary modules for this script to run.
+- __requirements.txt__: File containing the necessary modules for this script to run.
+
+
+## How is the data fetched?
+
+The logic for fetching the data is pretty simple.
+
+1. Get the latest date available in the database, if any. This will allow to only fetch new data that is not present in
+    the database.
+
+2. Call the API endpoint that will return only the necessary information. Just in case the dataset could be bigger,
+ the data is fetch through paging by a limit of 50.000 rows each time.
+
+3. Once we obtain all the new data, it is grouped by DATA and COMARCA and the total of doses is aggregated using the SUM function in the RECOMPTE column.
+
+4. Data is persisted in the database with the next schema. The data is assured to never be duplicated thanks to DATA and COMARCA being its PRIMARY KEY.
+
+
+![Database schema](img/schema.png)
