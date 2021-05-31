@@ -31,10 +31,10 @@ class OpenData:
             if exists is None: # If the table dos not exists create it.
                 con.execute("""
                     CREATE TABLE doses(
-                        DATA DATE,
-                        COMARCA TEXT,
-                        RECOMPTE INTEGER,
-                        PRIMARY KEY (DATA, COMARCA)
+                        "DATA" DATE,
+                        "COMARCA" TEXT,
+                        "RECOMPTE" INTEGER,
+                        PRIMARY KEY ("DATA", "COMARCA")
                     )
                 """)
                 self.logger.log(logging.INFO, "Table doses created")
