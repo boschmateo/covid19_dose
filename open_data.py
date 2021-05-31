@@ -16,7 +16,7 @@ class OpenData:
 
     def __init__(self):
         self.client = Socrata("analisi.transparenciacatalunya.cat", None)
-        self.engine = create_engine(config("DB_URL"))
+        self.engine = create_engine(config("DB_URI"))
         self.logger = logging.getLogger(__name__)
         self.logger.setLevel(logging.INFO)
 
@@ -71,7 +71,7 @@ class OpenData:
             df = pd.DataFrame(all_rows)
             df = df.astype({"DATA": np.datetime64, "RECOMPTE": np.int16})
             df = df.groupby(["DATA", "COMARCA"], as_index=False).agg({"RECOMPTE": "sum"})
-            df.to_sql("doses", con=config("DB_URL"), if_exists="append", index=False)
+            df.to_sql("doses", con=config("DB_URI"), if_exists="append", index=False)
 
             self.logger.log(logging.INFO, "{} new rows found".format(len(df.index)))
 
