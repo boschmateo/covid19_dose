@@ -1,0 +1,11 @@
+CREATE DATABASE covid19;
+
+\connect covid19;
+
+
+CREATE TABLE doses(
+    DATA DATE,
+    COMARCA TEXT,
+    RECOMPTE INTEGER,
+    PRIMARY KEY (DATA, COMARCA)
+)
