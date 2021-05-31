@@ -38,7 +38,7 @@ The script to run is named `doses.py` and only accepts one parameter:
 
 Example:
 
-```
+```python
 python3 doses.py --create
 ```
 
@@ -63,7 +63,15 @@ The logic for fetching the data is pretty simple.
     the database.
 
 2. Call the API endpoint that will return only the necessary information. Just in case the dataset could be bigger,
- the data is fetch through paging by a limit of 50.000 rows each time.
+ the data is fetch through paging by a limit of 50.000 rows each time. By analyzing the dataset we can determine that the query we should use to obtain the relevant information is:
+ 
+```sql
+SELECT DATA, COMARCA, RECOMPTE
+FROM irki-p3c7
+WHERE DOSI=1 AND NO_VACUNAT IS NULL AND DATE > <date>
+LIMIT <limit>
+OFFSET <offset>
+```
 
 3. Once we obtain all the new data, it is grouped by DATA and COMARCA and the total of doses is aggregated using the SUM function in the RECOMPTE column.
 
